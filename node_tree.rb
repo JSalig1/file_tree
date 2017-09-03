@@ -1,4 +1,4 @@
-class TreeBuilder
+class NodeTree
 
   require 'tree'
 
