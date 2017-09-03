@@ -2,7 +2,6 @@ class NodeTree
 
   require 'tree'
 
-
   # Returns a single project node
   def generate_project(name)
     Tree::TreeNode.new(name, id: 1, type: "Project", root_folder_id: 1)
@@ -33,7 +32,7 @@ class NodeTree
     subfolders = []
     root_source.children do |node|
       if node.content[:type] == "Folder" # ...only if it's a folder...
-        subfolders << node
+        subfolders << convert_to_hash(node)
         subfolders.concat list_subfolders(node) # ..using recursion
       end
     end
@@ -41,6 +40,11 @@ class NodeTree
     return subfolders
   end
 
+  private
 
+  # Construct exact hash we want
+  def convert_to_hash(node)
+    { id: node.content[:id], name: node.name, parent_folder_id: node.parent.content[:id] }
+  end
 
 end

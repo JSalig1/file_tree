@@ -1,4 +1,5 @@
 require_relative 'node_tree'
+require 'json'
 
 # Create objects
 
@@ -18,4 +19,7 @@ project << folders[0] << folders[1] << folders[2] << folders[3] << files[2]
 
 project.print_tree
 
-puts node_tree.list_subfolders(project).count
+# Find all subfolders for project and return them as JSON
+
+result = node_tree.list_subfolders(project)
+puts JSON.generate( { folders: result } ).inspect
