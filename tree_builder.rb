@@ -2,10 +2,13 @@ class TreeBuilder
 
   require 'tree'
 
+
+  # Returns a single project node
   def generate_project(name)
     Tree::TreeNode.new(name, id: 1, type: "Project", root_folder_id: 1)
   end
 
+  # Returns an array of file nodes
   def generate_files(count)
     file_nodes = []
     count.times do |i|
@@ -15,6 +18,7 @@ class TreeBuilder
     return file_nodes
   end
 
+  # Returns an array of folder nodes
   def generate_folders(count)
     folder_nodes = []
     count.times do |i|
@@ -23,5 +27,20 @@ class TreeBuilder
 
     return folder_nodes
   end
+
+  # List contents...
+  def list_subfolders(root_source)
+    subfolders = []
+    root_source.children do |node|
+      if node.content[:type] == "Folder" # ...only if it's a folder...
+        subfolders << node
+        subfolders.concat list_subfolders(node) # ..using recursion
+      end
+    end
+
+    return subfolders
+  end
+
+
 
 end

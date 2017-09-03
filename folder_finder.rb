@@ -17,3 +17,5 @@ project << folders[0] << folders[1] << folders[2] << folders[3] << files[2]
 # Print tree to output
 
 project.print_tree
+
+puts tree_builder.list_subfolders(project).count
